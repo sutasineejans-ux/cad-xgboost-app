@@ -114,11 +114,16 @@ if st.button("🔍 ประเมินความเสี่ยง", use_con
         st.error("🔴 ความเสี่ยงสูง ต่อโรคหลอดเลือดหัวใจ")
         advice = "ควรพบแพทย์โดยเร็ว เพื่อรับการตรวจวินิจฉัยและวางแผนการรักษา"
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.metric(label="ระดับความเสี่ยง", value=f"{risk_pct:.1f}%")
-    with col2:
-        st.metric(label="เกณฑ์", value="ต่ำ<30% | กลาง<60% | สูง≥60%")
+col1, col2 = st.columns(2)
+with col1:
+    st.metric(label="ระดับความเสี่ยง", value=f"{risk_pct:.1f}%")
+with col2:
+    if risk_pct < 30:
+        st.metric(label="การจัดระดับ", value="🟢 ต่ำ")
+    elif risk_pct < 60:
+        st.metric(label="การจัดระดับ", value="🟡 ปานกลาง")
+    else:
+        st.metric(label="การจัดระดับ", value="🔴 สูง")
 
     st.progress(min(prob, 1.0))
     st.info(f"💡 **คำแนะนำ:** {advice}")
