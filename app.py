@@ -106,28 +106,25 @@ if st.button("🔍 ประเมินความเสี่ยง", use_con
 
     if risk_pct < 30:
         st.success("✅ ความเสี่ยงต่ำ ต่อโรคหลอดเลือดหัวใจ")
+        level  = "🟢 ต่ำ"
         advice = "ดูแลสุขภาพต่อเนื่อง ออกกำลังกายสม่ำเสมอ และตรวจสุขภาพประจำปี"
     elif risk_pct < 60:
         st.warning("🟡 ความเสี่ยงปานกลาง ต่อโรคหลอดเลือดหัวใจ")
+        level  = "🟡 ปานกลาง"
         advice = "ควรปรับพฤติกรรมสุขภาพ ลดอาหารไขมันสูง เพิ่มการออกกำลังกาย และพบแพทย์เพื่อตรวจประเมิน"
     else:
         st.error("🔴 ความเสี่ยงสูง ต่อโรคหลอดเลือดหัวใจ")
+        level  = "🔴 สูง"
         advice = "ควรพบแพทย์โดยเร็ว เพื่อรับการตรวจวินิจฉัยและวางแผนการรักษา"
 
-col1, col2 = st.columns(2)
-with col1:
-    st.metric(label="ระดับความเสี่ยง", value=f"{risk_pct:.1f}%")
-with col2:
-    if risk_pct < 30:
-        st.metric(label="การจัดระดับ", value="🟢 ต่ำ")
-    elif risk_pct < 60:
-        st.metric(label="การจัดระดับ", value="🟡 ปานกลาง")
-    else:
-        st.metric(label="การจัดระดับ", value="🔴 สูง")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.metric(label="ระดับความเสี่ยง", value=f"{risk_pct:.1f}%")
+    with col2:
+        st.metric(label="การจัดระดับ", value=level)
 
     st.progress(min(prob, 1.0))
     st.info(f"💡 **คำแนะนำ:** {advice}")
-
     st.warning(
         "⚠️ **คำเตือนสำคัญ** — "
         "ผลการประเมินนี้เป็นเพียงการ **คัดกรองความเสี่ยงเบื้องต้น** เท่านั้น "
