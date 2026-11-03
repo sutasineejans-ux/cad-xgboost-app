@@ -96,6 +96,16 @@ st.set_page_config(page_title="ประเมินความเสี่ย�
                    page_icon="❤️", layout="centered")
 st.title("❤️ ประเมินความเสี่ยงโรคหลอดเลือดหัวใจ (CAD)")
 st.caption("สำหรับประชาชนไทยอายุ 35 ปีขึ้นไป")
+
+# Model info
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.metric("โมเดล", "XGBoost")
+with col2:
+    st.metric("ROC-AUC", "0.9611")
+with col3:
+    st.metric("จำนวนตัวแปร", "19")
+
 st.divider()
 
 input_values = {}
@@ -139,7 +149,19 @@ if st.button("🔍 ประเมินความเสี่ยง",
 
     st.metric(label="ระดับความเสี่ยง", value=f"{risk_pct:.1f}%")
     st.progress(min(prob, 1.0))
-    st.caption("⚠️ ผลนี้เป็นการคัดกรองเบื้องต้น ไม่ใช่การวินิจฉัยทางการแพทย์")
+    st.warning("""
+⚠️ **คำเตือนสำคัญ**
+
+ผลการประเมินนี้เป็นเพียงการ **คัดกรองความเสี่ยงเบื้องต้น** เท่านั้น 
+ไม่สามารถใช้แทนการวินิจฉัยทางการแพทย์ได้ 
+
+กรุณาปรึกษาแพทย์หรือบุคลากรทางการแพทย์ 
+เพื่อการวินิจฉัยและรักษาที่ถูกต้อง
+""")
 
 st.divider()
-st.caption("Biomedical Data Science | Kasetsart University")
+col1, col2 = st.columns(2)
+with col1:
+    st.caption("🎓 Biomedical Data Science | Kasetsart University")
+with col2:
+    st.caption("🤖 Model: XGBoost | Features: 19 | ROC-AUC: 0.9611")
